@@ -1,10 +1,9 @@
 # darkcity_blog
-
-    个人博客网站
+    [![npm version](https://img.shields.io/npm/v/axios.svg?style=flat-square)](https://www.npmjs.org/package/axios)
 
 
 ## 项目依赖
-    
+
 
 ## 项目命令
 
