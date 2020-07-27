@@ -1,0 +1,25 @@
+.author-component {
+    text-align: center;
+    padding: 1rem;
+
+}
+
+.bloger-avater {
+    margin-bottom: 1rem;
+}
+
+
+.bloger-tags .ant-tag {
+    margin-bottom: 10px;
+}
+
+.bloger-introduction {
+    font-size: .8rem;
+    color: #999;
+}
+
+.account {
+    background-color: #999;
+    margin-left: .5rem;
+    margin-right: .5rem;
+}

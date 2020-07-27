@@ -1,6 +1,6 @@
 # darkcity_blog
 
-[![npm version](https://img.shields.io/npm/v/axios.svg?style=flat-square)](https://www.npmjs.org/package/axios)
+    基于next.js实现的前端技术博客
 
 
 ## 项目依赖
