@@ -7,6 +7,7 @@
 }
 
 .header-logo {
+    display: inline-block;
     color: #1e90ff;
     font-size: 1.4rem;
     text-align: left;
@@ -14,10 +15,10 @@
 }
 
 .header-info {
+    display: inline-block;
     font-size: 0.6rem;
     padding-left: 0.3rem;
     color: #999;
-    display: inline-block;
 }
 
 .ant-meu {

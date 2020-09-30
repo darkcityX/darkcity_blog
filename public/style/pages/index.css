@@ -1,0 +1,21 @@
+.list-header{
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-header .list-header-title {
+    font-weight: 600;
+}
+
+.list-header .list-header-more {
+    font-size: 12px;
+    cursor: pointer;
+    transition: transform linear .2s;
+}
+
+.list-header .list-header-more:hover{
+    color: #1890ff;
+    transform: scale(1.2);
+}

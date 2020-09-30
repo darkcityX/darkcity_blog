@@ -35,7 +35,7 @@ body {
 
 .comm-box {
     background-color: #FFF;
-    margin-left: .5rem;
+    margin-left: 1rem;
     padding: .3rem;
     border-radius: .3rem;
     border: 1px solid #eee;
@@ -44,7 +44,7 @@ body {
 }
 
 .comm-main {
-    margin-top: .5rem;
+    margin-top: 1rem;
 }
 /* ----- 页面布局样式：结束 ------ */
 

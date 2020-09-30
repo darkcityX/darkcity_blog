@@ -1,56 +1,64 @@
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
+
 import {Row, Col, Breadcrumb, Affix} from 'antd';
 import {ClockCircleOutlined, FolderOutlined, FireOutlined} from '@ant-design/icons';
 
-// 引入解析markdow语法插件
-import ReactMarkdown from 'react-markdown';
+import axios from 'axios'
+import servicePath from '../config/apiUrl'
 
-// 引入生成markdow语法导航插件
-import MarkNav from 'markdown-navbar';
-import 'markdown-navbar/dist/navbar.css';
+// // 引入解析markdow语法插件
+// import ReactMarkdown from 'react-markdown';
+
+// // 引入生成markdow语法导航插件
+// import MarkNav from 'markdown-navbar';
+// import 'markdown-navbar/dist/navbar.css';
+
+
+import marked from 'marked'
+import hljs from "highlight.js";
+import 'highlight.js/styles/monokai-sublime.css';
+
+import Tocify from '../components/tocify.tsx'
+
+
 
 import Header from '../components/Header';
-import Author from '../components/Author';
+const Author = dynamic(import('../components/Author'), {
+    ssr: false
+});
 import Footer from '../components/Footer';
 
 import '../public/style/pages/details.css';
 
-const DetailsPage = () => {
+const DetailsPage = (data) => {
 
-    let markdown = '# P01:课程介绍和环境搭建\n' +
-        '[ **M** ] arkdown + E [ **ditor** ] = **Mditor**  \n' +
-        '> Mditor 是一个简洁、易于集成、方便扩展、期望舒服的编写 markdown 的编辑器，仅此而已... \n\n' +
-        '**这是加粗的文字**\n\n' +
-        '*这是倾斜的文字*`\n\n' +
-        '***这是斜体加粗的文字***\n\n' +
-        '~~这是加删除线的文字~~ \n\n' +
-        '\`console.log(111)\` \n\n' +
-        '# p02:来个Hello World 初始Vue3.0\n' +
-        '> aaaaaaaaa\n' +
-        '>> bbbbbbbbb\n' +
-        '>>> cccccccccc\n' +
-        '***\n\n\n' +
-        '# p03:Vue3.0基础知识讲解\n' +
-        '> aaaaaaaaa\n' +
-        '>> bbbbbbbbb\n' +
-        '>>> cccccccccc\n\n' +
-        '# p04:Vue3.0基础知识讲解\n' +
-        '> aaaaaaaaa\n' +
-        '>> bbbbbbbbb\n' +
-        '>>> cccccccccc\n\n' +
-        '#5 p05:Vue3.0基础知识讲解\n' +
-        '> aaaaaaaaa\n' +
-        '>> bbbbbbbbb\n' +
-        '>>> cccccccccc\n\n' +
-        '# p06:Vue3.0基础知识讲解\n' +
-        '> aaaaaaaaa\n' +
-        '>> bbbbbbbbb\n' +
-        '>>> cccccccccc\n\n' +
-        '# p07:Vue3.0基础知识讲解\n' +
-        '> aaaaaaaaa\n' +
-        '>> bbbbbbbbb\n' +
-        '>>> cccccccccc\n\n' +
-        '``` var a=11; ```'
+    // console.log( "详情页初始数据", data );
+
+    /*----------- markdown 选项设置： 开始 ----------------*/ 
+    const renderer = new marked.Renderer();
+
+    const tocify = new Tocify()
+    renderer.heading = function (text, level, raw) {
+        const anchor = tocify.add(text, level);
+        return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
+    };
+
+    marked.setOptions({
+        renderer: renderer,
+        gfm: true,
+        pedantic: false,
+        sanitize: false,
+        tables: true,
+        breaks: false,
+        smartLists: true,
+        smartypants: false,
+        highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+        }
+    });
+    let html = marked(data.content);
+    /*--------- markdown 选项设置： 结束 ----------------*/   
 
     return (
         <>
@@ -74,27 +82,29 @@ const DetailsPage = () => {
                                 <a href="/">首页</a>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                <a href="/list">文章详情</a>
+                                <a href="/list">文章列表</a>
                             </Breadcrumb.Item>
-                            <Breadcrumb.Item>xxxx</Breadcrumb.Item>
+                            <Breadcrumb.Item>{data.title}</Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
 
                     <div className="details-content">
                         <div className="detailed-title">
-                            React实战视频教程-技术胖Blog开发(更新08集)
+                            { data.title }
                         </div>
 
                         <div className="list-icon center">
-                            <span><ClockCircleOutlined />2019-06-28</span>
-                            <span><FolderOutlined /> 视频教程</span>
-                            <span><FireOutlined /> 5498人</span>
+                            <span><ClockCircleOutlined />{data.create_time}</span>
+                            <span><FolderOutlined /> {data.type_name}</span>
+                            <span><FireOutlined /> {data.view_count}人</span>
                         </div>
 
-                        <div className="detailed-content" >
-                            <ReactMarkdown 
-                                source={markdown} 
-                                escapeHtml={false}/>
+                        <div className="detailed-content" dangerouslySetInnerHTML = {{__html:html}} >
+                            {/* <ReactMarkdown 
+                                source = {
+                                    markdown
+                                }
+                                escapeHtml={false}/> */}
                         </div>
 
                     </div>
@@ -110,10 +120,11 @@ const DetailsPage = () => {
                     <Affix offsetTop={5}>
                         <div className="detailed-nav comm-box">
                             <div className="nav-title">文章目录</div>
-                            <MarkNav
+                                {tocify && tocify.render()}
+                            {/* <MarkNav
                                 className="article-menu"
                                 source={markdown}
-                                ordered={false}/>
+                                ordered={false}/> */}
                         </div>
                     </Affix>
                 </Col>
@@ -123,6 +134,20 @@ const DetailsPage = () => {
             <Footer />
         </>
     )
+}
+
+DetailsPage.getInitialProps = async (req) => {
+    let aid = req.query.aid;
+
+    const promise = new Promise(resolve => {
+        // `http://localhost:3300/web/article/queryDetails?aid=${aid}`
+        axios(`${servicePath.getArticleDetails}${aid}`)
+            .then(res=>{
+                resolve(res.data.entity);
+            })
+    });
+
+    return await promise;
 }
 
 export default DetailsPage;

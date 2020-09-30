@@ -1,0 +1,65 @@
+.filter-list-component{
+
+}
+
+.card-title .anticon{
+    margin-right: 0.6rem;
+}
+
+.type_card{
+    box-sizing: border-box;
+    margin-bottom: 0.8rem;
+    padding: .4rem .8rem;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all .5s;
+    border-radius: .25rem;
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, .1);
+}
+
+.type_card:hover{
+    transform: scale(1.06);
+}
+
+.type-content .active {
+    background: #778ca3;
+    transform: scale(1.06);
+}
+
+.type-content .active .type-name{
+    color: #fff;
+}
+.type-content .active .type-total{
+    background: #d1d8e0;
+}
+
+.type_card:last-child{
+    margin-bottom: 0;
+}
+
+.type-name {
+    color: #3eaf7c;
+    font-weight: 500;
+}
+
+.type-total{
+    width: 1.6rem;
+    height: 1.6rem;
+    text-align: center;
+    line-height: 1.6rem;
+    border-radius: .25rem;
+    background: #eee;
+    font-size: .6rem;
+    color: #fff;
+    background-color: #abbd81;
+}
+
+
+.tag-all-card{
+    cursor: pointer;
+}
+.tag-card{
+    margin: 0.4rem 0.6rem;
+    cursor: pointer;
+}
