@@ -18,7 +18,7 @@
     "highlight.js": "^10.1.2",
     "lodash": "^4.17.19",
     "markdown-navbar": "^1.4.2",
-    "marked": "^1.1.1",
+    "marked": "^2.0.0",
     "next": "9.4.4",
     "rc-queue-anim": "^1.8.5",
     "rc-texty": "^0.2.0",
